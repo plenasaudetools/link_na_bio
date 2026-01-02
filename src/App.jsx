@@ -9,7 +9,7 @@ const LINKS = [
     title: 'O Método M.A.P.A.',
     subtitle: 'Avaliação & Causa',
     image: '/card-mapa.png',
-    url: 'https://mapa-plena-saude.vercel.app/',
+    url: 'https://mapa.clinicaplenasaude.com/',
     align: 'left'
   },
   {
@@ -17,7 +17,7 @@ const LINKS = [
     title: 'Pele Plena',
     subtitle: 'Saúde & Estética',
     image: '/card-pele.png',
-    url: 'https://pele-plena.vercel.app/',
+    url: 'https://peleplena.clinicaplenasaude.com/',
     align: 'right'
   },
   {
@@ -25,7 +25,7 @@ const LINKS = [
     title: 'Procedimentos',
     subtitle: 'Menu Clínico',
     image: '/card-procedimentos.png',
-    url: 'https://procedimentos-plena-saude.vercel.app/',
+    url: 'https://procedimentos.clinicaplenasaude.com/',
     align: 'left'
   }
 ];
@@ -242,7 +242,7 @@ export default function App() {
             Não sabe por onde começar?
           </p>
           <a
-            href="https://wa.me/5513997230493" // Replace with actual number
+            href="https://wa.me/5513988595323"
             target="_blank"
             className="inline-flex items-center justify-center gap-3 bg-brand-gold text-brand-dark px-8 py-3 rounded-sm font-bold tracking-widest uppercase text-xs hover:bg-brand-gold-light transition-all transform hover:scale-105 shadow-lg shadow-brand-gold/20"
           >
@@ -256,7 +256,7 @@ export default function App() {
       <footer className="flex flex-col items-center gap-8 opacity-40 z-20">
         <img src="/logo-wide.png" alt="Plena Saúde" className="h-8 grayscale invert" />
         <div className="flex gap-8">
-          <a href="#" className="hover:text-brand-gold transition-colors"><Instagram className="w-4 h-4" /></a>
+          <a href="https://www.instagram.com/plenasaudeeestetica/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors"><Instagram className="w-4 h-4" /></a>
           <a href="#" className="hover:text-brand-gold transition-colors"><MapPin className="w-4 h-4" /></a>
         </div>
         <p className="text-[10px] tracking-widest uppercase text-brand-cream/40">
