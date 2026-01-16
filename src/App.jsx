@@ -1,13 +1,16 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Instagram, MessageCircle, MapPin, ChevronDown } from 'lucide-react';
 
+/* --- ASSETS --- */
 /* --- ASSETS --- */
 const LINKS = [
   {
     id: 'mapa',
     title: 'O Método M.A.P.A.',
     subtitle: 'Avaliação & Causa',
+    description: 'Nosso processo exclusivo de avaliação detalhada para identificar a verdadeira causa das suas queixas.',
+    ctaText: 'AGENDAR AVALIAÇÃO',
     image: '/card-mapa.png',
     url: 'https://mapa.clinicaplenasaude.com/',
     align: 'left'
@@ -16,6 +19,8 @@ const LINKS = [
     id: 'pele',
     title: 'Pele Plena',
     subtitle: 'Saúde & Estética',
+    description: 'Programas de gerenciamento de pele para tratar acne, manchas e envelhecimento com acompanhamento contínuo.',
+    ctaText: 'VER PLANOS',
     image: '/card-pele.png',
     url: 'https://peleplena.clinicaplenasaude.com/',
     align: 'right'
@@ -24,6 +29,8 @@ const LINKS = [
     id: 'procedimentos',
     title: 'Procedimentos',
     subtitle: 'Menu Clínico',
+    description: 'Lista completa dos serviços avulsos: Botox, Preenchimentos, Bioestimuladores, Lasers e mais.',
+    ctaText: 'VER LISTA COMPLETA',
     image: '/card-procedimentos.png',
     url: 'https://procedimentos.clinicaplenasaude.com/',
     align: 'left'
@@ -55,6 +62,7 @@ const Ticker = () => {
 };
 
 const TiltCard = ({ item, index }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -85,13 +93,15 @@ const TiltCard = ({ item, index }) => {
     y.set(0);
   };
 
+  const toggleOpen = () => setIsOpen(!isOpen);
+
   return (
-    <motion.a
+    <motion.div
       ref={ref}
-      href={item.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative w-full h-[400px] md:h-80 block rounded-lg mb-12 perspective-1000"
+      onClick={toggleOpen}
+      className={`group relative w-full block rounded-lg mb-12 perspective-1000 cursor-pointer transition-all duration-500`}
+      // Removendo altura fixa para permitir expansão, usando min-height
+      style={{ minHeight: isOpen ? 'auto' : '400px', rotateX, rotateY, transformStyle: "preserve-3d" }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{
         opacity: 1,
@@ -102,42 +112,102 @@ const TiltCard = ({ item, index }) => {
       transition={{ duration: 0.8, delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
     >
-      {/* 3D Container */}
-      <div className="absolute inset-0 rounded-lg overflow-hidden border border-white/10 bg-brand-dark">
-        {/* Background Image */}
+      {/* 3D Container - precisa crescer com o conteúdo pai */}
+      <motion.div
+        layout
+        className="relative w-full h-full rounded-lg overflow-hidden border border-white/10 flex flex-col min-h-[400px] md:min-h-80 bg-brand-dark"
+        transition={{ layout: { duration: 0.3 } }}
+      >
+        {/* Background Image - Absolute para cobrir tudo */}
         <div className="absolute inset-0 bg-black">
           <motion.img
             src={item.image}
             alt={item.title}
-            className="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-110 transition-all duration-1000 ease-out"
+            className="w-full h-full object-cover opacity-50 group-hover:opacity-60 transition-all duration-1000 ease-out"
             style={{ translateZ: "50px" }}
+            animate={isOpen ? { scale: 1.05, opacity: 0.5 } : { scale: 1, opacity: 0.5 }}
           />
           {/* Vignette */}
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent opacity-90" />
         </div>
 
-        {/* Floating Glass Panel Text */}
+        {/* Content */}
         <div
-          className={`absolute bottom-0 w-full p-8 flex flex-col justify-end h-full ${item.align === 'right' ? 'items-end text-right' : 'items-start text-left'}`}
+          className={`relative z-10 w-full p-8 flex flex-col justify-end h-full mt-auto ${item.align === 'right' ? 'items-end text-right' : 'items-start text-left'}`}
           style={{ transform: "translateZ(80px)" }}
         >
-          <div className="glass-panel p-6 rounded-sm max-w-[90%] backdrop-blur-md border-l-2 border-brand-gold bg-black/20">
-            <p className="text-brand-gold text-sm md:text-base font-sans tracking-[0.3em] uppercase mb-4 font-bold">
+          <motion.div
+            layout
+            className="glass-panel p-6 rounded-sm max-w-[95%] md:max-w-[85%] backdrop-blur-md border-l-2 border-brand-gold bg-black/40"
+          >
+            <p className="text-brand-gold text-sm md:text-base font-sans tracking-[0.3em] uppercase mb-2 font-bold">
               {item.subtitle}
             </p>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-brand-cream leading-tight mb-6 drop-shadow-lg">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-brand-cream leading-tight mb-4 drop-shadow-lg">
               {item.title}
             </h2>
-            <div className="inline-flex items-center gap-3 text-base text-brand-gold/80 group-hover:text-brand-gold transition-colors duration-300">
-              <span className="uppercase tracking-[0.2em] font-medium">Acessar</span>
-              <ArrowRight className="w-5 h-5" />
-            </div>
-          </div>
+
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <p className="text-brand-cream/90 text-sm md:text-base mb-6 leading-relaxed font-sans font-light border-t border-brand-gold/30 pt-4 mt-2">
+                    {item.description}
+                  </p>
+
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()} // Impede o clique no botão de fechar o card
+                    className="relative overflow-hidden inline-flex items-center justify-center gap-3 bg-[#d8bc8c] text-brand-dark px-6 py-3 rounded-sm font-bold tracking-[0.2em] uppercase text-xs md:text-sm whitespace-nowrap hover:bg-white transition-all duration-500 shadow-2xl z-10 w-full md:w-auto"
+                  >
+                    {/* Shimmer Effect (Inside Button) */}
+                    <motion.div
+                      className="absolute inset-0 pointer-events-none"
+                      initial={{ x: "-100%", skewX: -20 }}
+                      animate={{ x: "200%", skewX: -20 }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 2.5,
+                        ease: "easeInOut",
+                        repeatDelay: 1
+                      }}
+                      style={{
+                        background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)",
+                        width: "50%"
+                      }}
+                    />
+
+                    <span className="relative z-20 flex items-center gap-3">
+                      {item.ctaText}
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {!isOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="mt-4 flex items-center gap-2 text-brand-gold/70 text-sm tracking-widest uppercase"
+              >
+                <span className="text-[10px]">Saiba mais</span>
+                <ChevronDown className="w-4 h-4 animate-bounce" />
+              </motion.div>
+            )}
+          </motion.div>
         </div>
-      </div>
-    </motion.a>
+      </motion.div>
+    </motion.div>
   );
 };
 
@@ -292,26 +362,47 @@ export default function App() {
       </section>
 
       {/* CONCIERGE CTA */}
-      <section className="w-full max-w-md px-6 mt-16 mb-16 relative z-20">
-        <div className="border border-brand-gold/20 bg-gradient-to-b from-brand-gold/5 to-transparent p-10 rounded-sm text-center backdrop-blur-sm">
-          <p className="text-brand-cream text-xl font-serif mb-6 italic">
+      {/* CONCIERGE CTA */}
+      <section className="w-full max-w-4xl px-4 mt-16 mb-16 relative z-20">
+        <div className="border border-brand-gold/20 bg-gradient-to-b from-brand-gold/5 to-transparent p-8 md:p-10 rounded-sm backdrop-blur-sm flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+          <p className="text-brand-cream text-xl md:text-2xl font-serif italic text-center md:text-left">
             Não sabe por onde começar?
           </p>
+
           <a
             href="https://wa.me/5513988595323"
             target="_blank"
-            className="inline-flex items-center justify-center gap-4 bg-brand-gold text-brand-dark px-10 py-4 rounded-sm font-bold tracking-[0.2em] uppercase text-xs hover:bg-brand-gold-light transition-all transform hover:scale-105 shadow-xl shadow-brand-gold/10"
+            className="relative overflow-hidden inline-flex items-center justify-center gap-3 bg-[#d8bc8c] text-brand-dark px-8 py-4 rounded-sm font-bold tracking-[0.2em] uppercase text-xs md:text-sm whitespace-nowrap hover:bg-white transition-all duration-500 shadow-2xl z-10 w-full md:w-auto"
           >
-            <MessageCircle className="w-5 h-5" />
-            Falar com a Equipe
+            {/* Shimmer Effect (Inside Button) */}
+            <motion.div
+              className="absolute inset-0 pointer-events-none"
+              initial={{ x: "-100%", skewX: -20 }}
+              animate={{ x: "200%", skewX: -20 }}
+              transition={{
+                repeat: Infinity,
+                duration: 2.5,
+                ease: "easeInOut",
+                repeatDelay: 1
+              }}
+              style={{
+                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)",
+                width: "50%"
+              }}
+            />
+
+            <span className="relative z-20 flex items-center gap-3">
+              <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              Falar com a Equipe
+            </span>
           </a>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="flex flex-col items-center gap-10 py-12 opacity-50 z-20">
-        <img src="/logo-wide.png" alt="Plena Saúde" className="h-8 grayscale invert opacity-50" />
-        <div className="flex gap-10">
+      <footer className="flex flex-col items-center gap-10 py-12 z-20">
+        <img src="/logo-wide.png" alt="Plena Saúde" className="h-14 grayscale invert opacity-80" />
+        <div className="flex gap-10 opacity-50 hover:opacity-100 transition-opacity duration-300">
           <a href="https://www.instagram.com/plenasaudeeestetica/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gold transition-colors"><Instagram className="w-5 h-5" /></a>
           <a href="#" className="hover:text-brand-gold transition-colors"><MapPin className="w-5 h-5" /></a>
         </div>
