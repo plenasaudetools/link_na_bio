@@ -558,8 +558,8 @@ export default function Article() {
                                 className="mb-10 rounded-lg overflow-hidden"
                             >
                                 <img
-                                    src={article.images.destaque}
-                                    alt={article.title}
+                                    src={article.images.destaque.url || article.images.destaque}
+                                    alt={article.images.destaque.alt || article.title}
                                     className="w-full h-[280px] md:h-[350px] object-cover"
                                 />
                             </motion.div>
@@ -627,8 +627,8 @@ export default function Article() {
                                             className="my-8 rounded-lg overflow-hidden"
                                         >
                                             <img
-                                                src={article.images[section.imageAfter]}
-                                                alt={section.title}
+                                                src={article.images[section.imageAfter].url || article.images[section.imageAfter]}
+                                                alt={article.images[section.imageAfter].alt || section.title}
                                                 className="w-full h-auto"
                                             />
                                         </motion.div>

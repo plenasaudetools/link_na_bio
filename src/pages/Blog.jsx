@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Search, MessageCircle, CheckCircle, BookOpen, Home } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Search, MessageCircle, CheckCircle, BookOpen, Home, Calendar, Clock } from 'lucide-react';
 import { ARTICLES, CATEGORIES, AUTHOR } from '../data/articles';
 
 /* --- BLOG CARD --- */
@@ -47,11 +47,13 @@ const BlogCard = ({ article, index }) => {
                         {/* Meta */}
                         <div className="flex items-center justify-between mt-auto">
                             <div className="flex items-center gap-4 text-sm text-brand-cream/50">
-                                <span className="flex items-center gap-1">
-                                    📅 {new Date(article.publishedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                <span className="flex items-center gap-1.5">
+                                    <Calendar className="w-3.5 h-3.5 text-brand-gold" />
+                                    {new Date(article.publishedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
                                 </span>
-                                <span className="flex items-center gap-1">
-                                    ⏱️ {article.readingTime} min
+                                <span className="flex items-center gap-1.5">
+                                    <Clock className="w-3.5 h-3.5 text-brand-gold" />
+                                    {article.readingTime} min
                                 </span>
                             </div>
                             <ArrowRight className="w-4 h-4 text-brand-gold opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />

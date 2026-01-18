@@ -30,7 +30,7 @@
   <meta property="twitter:image" content="https://clinicaplenasaude.com/og-image.png" />
 
   <!-- Preload Critical Assets -->
-  <link rel="preload" as="image" href="/hero-bg.jpg" />
+  <link rel="preload" as="image" href="/hero-bg.jpg" fetchpriority="high" />
 
   <!-- Schema.org for Google -->
   <script type="application/ld+json">
@@ -47,6 +47,13 @@
       "medicalSpecialty": [
         "AestheticMedicine",
         "MedicalSpecialty"
+      ],
+      "areaServed": [
+        { "@type": "City", "name": "Guarujá" },
+        { "@type": "AdministrativeArea", "name": "Enseada" },
+        { "@type": "AdministrativeArea", "name": "Pitangueiras" },
+        { "@type": "AdministrativeArea", "name": "Astúrias" },
+        { "@type": "AdministrativeArea", "name": "Jardim Acapulco" }
       ],
       "founder": {
         "@type": "Person",

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Instagram, MessageCircle, MapPin, ChevronDown, BookOpen } from 'lucide-react';
+import { ArrowRight, Instagram, MessageCircle, MapPin, ChevronDown, BookOpen, Calendar, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ARTICLES, CATEGORIES } from '../data/articles';
 
@@ -246,11 +246,13 @@ const BlogPreviewCard = ({ article }) => {
 
                     {/* Meta */}
                     <div className="flex items-center gap-4 text-sm text-brand-cream/50">
-                        <span className="flex items-center gap-1">
-                            📅 {new Date(article.publishedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
+                        <span className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-brand-gold" />
+                            {new Date(article.publishedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
                         </span>
-                        <span className="flex items-center gap-1">
-                            ⏱️ {article.readingTime} min
+                        <span className="flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 text-brand-gold" />
+                            {article.readingTime} min
                         </span>
                     </div>
                 </div>

@@ -36,10 +36,10 @@ export const ARTICLES = [
         readingTime: 8,
         featuredImage: "/blog/artigo-1-destaque.webp",
         images: {
-            destaque: "/blog/artigo-1-destaque.webp",
-            camadasPele: "/blog/artigo-1-camadas.webp",
-            cultivo: "/blog/artigo-1-cultivo.webp",
-            peleSaudavel: "/blog/artigo-1-pele-saudavel.webp",
+            destaque: { url: "/blog/artigo-1-destaque.webp", alt: "Dra. Vanderleia Prudêncio realizando avaliação facial diagnóstica na Clínica Plena Saúde Guarujá" },
+            camadasPele: { url: "/blog/artigo-1-camadas.webp", alt: "Ilustração técnica das camadas da pele humana mostrando a profundidade dos tratamentos estéticos" },
+            cultivo: { url: "/blog/artigo-1-cultivo.webp", alt: "Metáfora de cultivo de pele saudável: preparando a base para resultados estéticos duradouros" },
+            peleSaudavel: { url: "/blog/artigo-1-pele-saudavel.webp", alt: "Resultado de uma pele rejuvenescida e saudável após tratamento integrativo" },
         },
         cta: {
             text: "Conheça o Programa Pele Plena",
@@ -210,8 +210,10 @@ Quando a causa é identificada e o cuidado se torna contínuo, a pele responde d
         readingTime: 10,
         featuredImage: "/blog/artigo-2-destaque.png",
         images: {
-            destaque: "/blog/artigo-2-destaque.png",
-            comparacao: "/blog/artigo-2-comparacao.png",
+            destaque: { url: "/blog/artigo-2-destaque.webp", alt: "Comparativo visual entre os efeitos do Botox e Bioestimuladores de Colágeno para rejuvenescimento" },
+            toxina: { url: "/blog/artigo-2-toxina.webp", alt: "Aplicação de toxina botulínica para suavizar linhas de expressão na testa" },
+            bioestimulador: { url: "/blog/artigo-2-bio.webp", alt: "Processo de bioestimulação de colágeno para sustentação facial" },
+            combinacao: { url: "/blog/artigo-2-combo.webp", alt: "Tratamento estético combinado: a sinergia entre preenchedores e toxinas" },
         },
         cta: {
             text: "Ver Lista de Procedimentos",
