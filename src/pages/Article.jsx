@@ -280,8 +280,35 @@ export default function Article() {
     const relatedArticles = getRelatedArticles(slug, 2);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [slug]);
+        if (article) {
+            // Update Title
+            const previousTitle = document.title;
+            document.title = `${article.title} | Clínica Plena Saúde`;
+
+            // Update Meta Description
+            let metaDescription = document.querySelector('meta[name="description"]');
+            const previousDescription = metaDescription ? metaDescription.getAttribute('content') : '';
+
+            if (metaDescription) {
+                metaDescription.setAttribute('content', article.metaDescription);
+            } else {
+                metaDescription = document.createElement('meta');
+                metaDescription.name = "description";
+                metaDescription.content = article.metaDescription;
+                document.head.appendChild(metaDescription);
+            }
+
+            window.scrollTo(0, 0);
+
+            // Restore original metadata on unmount
+            return () => {
+                document.title = previousTitle;
+                if (metaDescription) {
+                    metaDescription.setAttribute('content', previousDescription);
+                }
+            };
+        }
+    }, [slug, article]);
 
     if (!article) {
         return (
