@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://clinicaplenasaude.com.br/sitemap.xml
