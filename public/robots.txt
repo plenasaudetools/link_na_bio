@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://clinicaplenasaude.com.br/sitemap.xml
+Sitemap: https://clinicaplenasaude.com/sitemap.xml
