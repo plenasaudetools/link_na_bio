@@ -210,10 +210,8 @@ Quando a causa é identificada e o cuidado se torna contínuo, a pele responde d
         readingTime: 10,
         featuredImage: "/blog/artigo-2-destaque.png",
         images: {
-            destaque: { url: "/blog/artigo-2-destaque.webp", alt: "Comparativo visual entre os efeitos do Botox e Bioestimuladores de Colágeno para rejuvenescimento" },
-            toxina: { url: "/blog/artigo-2-toxina.webp", alt: "Aplicação de toxina botulínica para suavizar linhas de expressão na testa" },
-            bioestimulador: { url: "/blog/artigo-2-bio.webp", alt: "Processo de bioestimulação de colágeno para sustentação facial" },
-            combinacao: { url: "/blog/artigo-2-combo.webp", alt: "Tratamento estético combinado: a sinergia entre preenchedores e toxinas" },
+            destaque: { url: "/blog/artigo-2-destaque.png", alt: "Comparativo visual entre os efeitos do Botox e Bioestimuladores de Colágeno para rejuvenescimento" },
+            comparacao: { url: "/blog/artigo-2-comparacao.png", alt: "Infográfico comparativo entre os mecanismos de ação do Botox e Bioestimuladores" },
         },
         cta: {
             text: "Ver Lista de Procedimentos",
