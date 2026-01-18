@@ -300,11 +300,38 @@ export default function Article() {
 
             window.scrollTo(0, 0);
 
+            // Inject FAQ Schema
+            let faqSchemaScript = document.getElementById('faq-schema');
+            if (article.content.faq) {
+                if (!faqSchemaScript) {
+                    faqSchemaScript = document.createElement('script');
+                    faqSchemaScript.id = 'faq-schema';
+                    faqSchemaScript.type = 'application/ld+json';
+                    document.head.appendChild(faqSchemaScript);
+                }
+                const faqData = {
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": article.content.faq.map(item => ({
+                        "@type": "Question",
+                        "name": item.question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": item.answer
+                        }
+                    }))
+                };
+                faqSchemaScript.text = JSON.stringify(faqData);
+            }
+
             // Restore original metadata on unmount
             return () => {
                 document.title = previousTitle;
                 if (metaDescription) {
                     metaDescription.setAttribute('content', previousDescription);
+                }
+                if (faqSchemaScript) {
+                    faqSchemaScript.text = ''; // Clear schema
                 }
             };
         }

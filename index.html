@@ -29,21 +29,40 @@
     content="Sua pele merece um plano, não apenas um procedimento. Conheça a Clínica Plena Saúde e descubra o rejuvenescimento integrativo com a Dra. Vanderleia Prudêncio." />
   <meta property="twitter:image" content="https://clinicaplenasaude.com/og-image.png" />
 
+  <!-- Preload Critical Assets -->
+  <link rel="preload" as="image" href="/hero-bg.jpg" />
+
   <!-- Schema.org for Google -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "MedicalBusiness",
       "name": "Clínica Plena Saúde",
-      "image": "/logo-wide.png",
-      "@id": "",
+      "alternateName": "Clínica Plena Saúde Guarujá",
+      "image": "https://clinicaplenasaude.com/og-image.png",
+      "@id": "https://clinicaplenasaude.com/#business",
       "url": "https://clinicaplenasaude.com",
       "telephone": "+5513988595323",
+      "priceRange": "$$$",
+      "medicalSpecialty": [
+        "AestheticMedicine",
+        "MedicalSpecialty"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Dra. Vanderleia Prudêncio",
+        "jobTitle": "Enfermeira Integrativa Especialista em Estética"
+      },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Guarujá",
         "addressRegion": "SP",
         "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "-23.9930", 
+        "longitude": "-46.2562"
       },
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
