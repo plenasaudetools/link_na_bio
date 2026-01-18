@@ -300,7 +300,16 @@ export default function Article() {
 
             window.scrollTo(0, 0);
 
-            // Inject FAQ Schema
+            // 1. Inject Canonical Link
+            let canonicalLink = document.querySelector('link[rel="canonical"]');
+            if (!canonicalLink) {
+                canonicalLink = document.createElement('link');
+                canonicalLink.rel = 'canonical';
+                document.head.appendChild(canonicalLink);
+            }
+            canonicalLink.href = `https://clinicaplenasaude.com/blog/${slug}`;
+
+            // 2. Inject FAQ Schema
             let faqSchemaScript = document.getElementById('faq-schema');
             if (article.content.faq) {
                 if (!faqSchemaScript) {
@@ -324,6 +333,73 @@ export default function Article() {
                 faqSchemaScript.text = JSON.stringify(faqData);
             }
 
+            // 3. Inject Breadcrumb & Entity Service Schema
+            let entitySchemaScript = document.getElementById('entity-schema');
+            if (!entitySchemaScript) {
+                entitySchemaScript = document.createElement('script');
+                entitySchemaScript.id = 'entity-schema';
+                entitySchemaScript.type = 'application/ld+json';
+                document.head.appendChild(entitySchemaScript);
+            }
+
+            // Map articles to Knowledge Graph Entities
+            const entities = {
+                'por-que-sua-pele-nao-melhora': 'https://en.wikipedia.org/wiki/Skin_care',
+                'botox-ou-bioestimulador': 'https://en.wikipedia.org/wiki/Botulinum_toxin',
+                'metodo-mapa': 'https://en.wikipedia.org/wiki/Aesthetics',
+                'acne-adulta': 'https://en.wikipedia.org/wiki/Acne'
+            };
+
+            const entityData = {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Clínica Plena Saúde",
+                                "item": "https://clinicaplenasaude.com"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Blog",
+                                "item": "https://clinicaplenasaude.com/blog"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": article.title,
+                                "item": `https://clinicaplenasaude.com/blog/${slug}`
+                            }
+                        ]
+                    },
+                    {
+                        "@type": "Service",
+                        "serviceType": "Rejuvenescimento Integrativo",
+                        "provider": { "@id": "https://clinicaplenasaude.com/#business" },
+                        "areaServed": { "@type": "City", "name": "Guarujá" },
+                        "hasOfferCatalog": {
+                            "@type": "OfferCatalog",
+                            "name": "Método M.A.P.A.",
+                            "itemListElement": [
+                                {
+                                    "@type": "Offer",
+                                    "itemOffered": {
+                                        "@type": "Service",
+                                        "name": article.title,
+                                        "sameAs": entities[slug] || ""
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            };
+            entitySchemaScript.text = JSON.stringify(entityData);
+
             // Restore original metadata on unmount
             return () => {
                 document.title = previousTitle;
@@ -332,6 +408,9 @@ export default function Article() {
                 }
                 if (faqSchemaScript) {
                     faqSchemaScript.text = ''; // Clear schema
+                }
+                if (entitySchemaScript) {
+                    entitySchemaScript.text = '';
                 }
             };
         }
